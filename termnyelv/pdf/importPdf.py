@@ -26,7 +26,7 @@ def load_pdf(path):
 
     for filename in os.listdir(path):
         if filename.endswith(".pdf"):
-
+            #tejles utvonal kereses
             full_path = os.path.join(path, filename)
             print(f"{full_path}")
             pagecontent = openread_pdf(full_path)
