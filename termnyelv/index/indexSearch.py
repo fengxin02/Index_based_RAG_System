@@ -48,6 +48,7 @@ def find_index_number(pagecontent):
    #3, toldalel talanitas jobban mukodne, keresesben es majd llm-nek elott  is jobb igy keresni (pipa
    #4, felesleges toldalek szo eltavolitas (pipa
 
+#kilistazza egy oldal szavait (stopszo nincs, toldalek nincs)
 def find_index_words(pagecontent):
 
     index = set()

@@ -95,7 +95,7 @@ def pro_question(question):
 
     return keyword
 
-#llm-nek keresre valo index
+#llm-nek keresre valo index (rag index inicializalas)
 def rag_index_build(docs):
 
     for doc in docs:
@@ -114,7 +114,8 @@ def rag_index_build(docs):
 
     print("Building rag index successfully.")
 
-
+#global_indexet inicializalja,
+#dokumentumokbol kiolvassa a szavakat, es a helyet
 def index_build(docs):
     for doc in docs:
         filename = doc['filename']
@@ -146,7 +147,7 @@ def search_global(word):
 
 
 
-
+#teszt: kiirja a dokumnetumot
 def doc_list(docs):
     for doc in docs:
         print(f"{doc['filename']}")
@@ -155,21 +156,7 @@ def doc_list(docs):
             print(f"Content: {pagecont['text']}")
 
 
-#teszt indexkeresdarabszammal
-#ebbol egy listat kene csinalni nem mindig mindenegyes alkalommal lefutni
-#last global_index
-def search_doc_num(word,docs):
-    word = word.lower()
-    for doc in docs:
-        print(doc['filename'])
-        for pagecont in doc['pages']:
-            index = find_index_number(pagecont)
-             #vagy fuggvenyben vagy kint??
-            if word in index:
-                print(f"Word founded: {word} in {pagecont['page_number']} times: {index[word]}")
 
-#kell egy olyan index ami a keresett szavat kilistazza hogy hol vannak
-# es meg mondja hol fordul elo legtobbszor
 if __name__ == "__main__":
 
     #beolvassa a pdf-eket
