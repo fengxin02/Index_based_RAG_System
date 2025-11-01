@@ -4,12 +4,11 @@ from nltk import SnowballStemmer
 from nltk.corpus import stopwords
 from openai import OpenAI
 import os
-from termnyelv.index.indexSearch import find_index_number, find_index_words
+from termnyelv.index.indexSearch import find_index_number
 from termnyelv.pdf.importPdf import load_pdf
 
 
-global_index = {}
-pdf_direc = "C:\\Users\\fengx\\PycharmProjects\\termeszetesnyelv_hazi\\res"
+pdf_direc = "C:\\Users\\fengx\\PycharmProjects\\termeszetesnyelv_hazi2\\res"
 rag_index = {}
 
 stopword = set(stopwords.words('hungarian'))
@@ -82,7 +81,7 @@ def find_best_part(question):
 
     answer = llm(context, question)
     return answer
-
+    #return  context
 
 #feldolgozza a kerdest es visszaadja a kulcsszot
 def pro_question(question):
@@ -114,37 +113,21 @@ def rag_index_build(docs):
 
     print("Building rag index successfully.")
 
-#global_indexet inicializalja,
-#dokumentumokbol kiolvassa a szavakat, es a helyet
-def index_build(docs):
-    for doc in docs:
-        filename = doc['filename']
-
-        for pagecont in doc['pages']:
-            #hol van az oldalon
-            place = f"{filename} (page: {pagecont['page_number']})"
-
-            words = find_index_words(pagecont)
-
-            for word in words:
-                if word not in global_index:
-                    global_index[word] = set()
-                global_index[word].add(place)
-
-    print("Building global index successfully.")
-
-
-#globalis indexbol keresi ki a megaadott szavat
-#??? kell e stem??????
+#RAG indexbol keresi ki a megaadott szavat
 def search_global(word):
     word = word.lower()
-    if word in global_index:
-        print(f"The '{word}' word is in the documents:")
-        for loc in global_index[word]:
-            print(f"  - {loc}")
-    else:
-        print(f"Can not find '{word}' in documents.")
+    word= stemmer.stem(word)
+    find_loc = set()
+    for place, data in rag_index.items():
+        if word in data['counts']:
+            find_loc.add(place)
 
+    if len(find_loc) > 0:
+        print(f"{word} is in :")
+        for place in find_loc:
+            print(f"\t{place}")
+    else:
+        print(f"{word} is not in the documents")
 
 
 #teszt: kiirja a dokumnetumot
@@ -163,11 +146,9 @@ if __name__ == "__main__":
     docs = load_pdf(pdf_direc)
 
     #felepiti az indexet
-    index_build(docs)
     rag_index_build(docs)
-    #teszt dokumentum feldolgozasra
 
-
+    #doc_list(docs)
     while True:
         print("......................................................")
         print("1. Index keresés")
@@ -197,6 +178,7 @@ if __name__ == "__main__":
 
 
     print("Kilépés a programból")
+    #teszt dokumentum feldolgozasra
 
     #keys = find_best_part("Mit csinál a nyelv")
     #print(llm(keys, "Mit csinál a nyelv"))
@@ -209,5 +191,5 @@ if __name__ == "__main__":
     #for key in keys:
     #   print(key)
 
-    #con = find_best_part("Mit csinál a nyelv")
+    #con = find_best_part("Ki volt kis herceg")
     #print(con)
