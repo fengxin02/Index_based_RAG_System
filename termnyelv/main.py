@@ -6,8 +6,9 @@ from openai import OpenAI
 import os
 from termnyelv.index.indexSearch import find_index_number
 from termnyelv.pdf.importPdf import load_pdf
+from dotenv import load_dotenv
 
-
+load_dotenv()
 pdf_direc = "C:\\Users\\fengx\\PycharmProjects\\termeszetesnyelv_hazi2\\res"
 rag_index = {}
 
@@ -17,7 +18,16 @@ stemmer = SnowballStemmer('hungarian')
 #chat-gpt-nek kuld promtot
 def llm(context, question):
     try:
-        openai = OpenAI(api_key="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")
+        #automatikusan kiolvassa az env-bol a keyt
+        #ha chatpgt- hasznalsz kommentezd ki a kovetkezo sort
+        #openai = OpenAI()
+
+        #ha github (ingyenes) kommentezd ki a kovetkezo sort
+        openai = OpenAI(
+            base_url="https://models.inference.ai.azure.com",
+            api_key=os.environ.get("GITHUB_TOKEN")
+        )
+
         system_prompt = (
             "Válaszolj a felhasználó kérdésére a meg adott kontextus alapján. Ne használj külső tudást."
         )
@@ -31,7 +41,7 @@ def llm(context, question):
                 """
         print("Sending request to LLM...")
         completion = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {
@@ -187,9 +197,9 @@ if __name__ == "__main__":
     #search_global("Péter")
     #search_doc_num("Péter",docs)
     #search_doc_num("Nyelv",docs)
-   # keys = pro_question("Mit csinál a nyelv?")
+    #keys = pro_question("Milyen kódról beszél?")
     #for key in keys:
-    #   print(key)
+     #  print(key)
 
-    #con = find_best_part("Ki volt kis herceg")
+    #con = find_best_part("Milyen kódról beszél?")
     #print(con)

@@ -1,7 +1,7 @@
 import os
 import fitz as pymu
 
-
+#oldalakat beolvassa
 def openread_pdf(path):
 
     try:
@@ -19,6 +19,7 @@ def openread_pdf(path):
         print(f"File reading went Wrong!{e}")
         return []
 
+#osszeallitja a documentumot
 def load_pdf(path):
 
     domencts = []
