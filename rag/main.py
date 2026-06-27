@@ -9,7 +9,7 @@ from rag.pdf.importPdf import load_pdf
 from dotenv import load_dotenv
 
 load_dotenv()
-pdf_direc = "C:\\Users\\fengx\\PycharmProjects\\termeszetesnyelv_hazi2\\res"
+pdf_direc = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res")
 rag_index = {}
 
 stopword = set(stopwords.words('hungarian'))
