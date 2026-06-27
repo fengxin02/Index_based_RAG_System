@@ -4,8 +4,8 @@ from nltk import SnowballStemmer
 from nltk.corpus import stopwords
 from openai import OpenAI
 import os
-from termnyelv.index.indexSearch import find_index_number
-from termnyelv.pdf.importPdf import load_pdf
+from rag.index.indexSearch import find_index_number
+from rag.pdf.importPdf import load_pdf
 from dotenv import load_dotenv
 
 load_dotenv()
