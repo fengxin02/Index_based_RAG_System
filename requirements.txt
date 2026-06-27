@@ -1,0 +1,5 @@
+openai
+nltk
+python-dotenv
+PyMuPDF
+simplemma
