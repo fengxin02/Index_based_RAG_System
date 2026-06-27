@@ -162,7 +162,7 @@ if __name__ == "__main__":
     while True:
         print("......................................................")
         print("1. Index keresés")
-        print("2. ChatGPT kérdezes a pdf kontexusból")
+        print("2. AI kérdezes a pdf kontexusból")
         print("0. kilépés")
         print("......................................................")
         choice = input("írd be a választ: ")
